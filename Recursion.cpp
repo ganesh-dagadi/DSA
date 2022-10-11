@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 bool sorted(int arr[] , int n){
@@ -49,7 +50,39 @@ void getfirstAndLastOccuranceInArray(){
     cout << lastOcc(arr , 7 , 0 , 2) <<endl;
 }
 
+void rev(string str , int i){
+    if(i == str.length()){
+        return;
+    }
+    rev(str , i+1);
+    cout << str[i];
+
+}
+
+void reverseString(){
+    string str = "hello";
+    rev(str , 0);
+}
+
+string replace(string str , int i){
+    if(i == (str.length() - 1)){
+        return str;
+    }
+
+    if(str[i] == 'p' && str[i+1] == 'i'){
+        str[i] = '3';
+        str[i+1] = '.';
+        str.insert(i+2 , "14");
+    }
+
+    return replace(str , i+1);
+}
+void replacePi(){
+    string str = "pipipipipipipipi";
+    cout << replace(str , 0);
+}
+
 int main(){
-    getfirstAndLastOccuranceInArray();
+    replacePi();
     return 0;
 }
