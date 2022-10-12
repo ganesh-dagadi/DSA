@@ -82,7 +82,19 @@ void replacePi(){
     cout << replace(str , 0);
 }
 
+void hanoi(int n , char src , char dest , char help){
+    if(n==1){
+        cout << "Moving From "<<src<<" to "<<dest << endl;
+        return;
+    }
+    // Move n-1 from src to helper
+    hanoi(n-1 , src , help , dest);
+    //move n drom src to dest
+    cout <<"Moving From "<<src<<" to "<<dest << endl;
+    //Move n-1 back from helper to dest
+    hanoi(n-1 , help , dest , src);
+}
 int main(){
-    replacePi();
+    hanoi(3 , 'A' , 'C' , 'B');
     return 0;
 }
