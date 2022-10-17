@@ -94,7 +94,22 @@ void hanoi(int n , char src , char dest , char help){
     //Move n-1 back from helper to dest
     hanoi(n-1 , help , dest , src);
 }
+
+string rmvDuplicates(string str , char key){
+    if(str.length() == 1){
+        return str;
+    }
+    for(int i = 1 ; i < str.length() ; i++){
+        if(str[i] == key){
+            str.erase(i , 1);
+            i--;
+        }
+    }
+    string join = str[0] + rmvDuplicates(str.substr(1 , str.length()-1) , str[1]);
+    return join;
+}
 int main(){
-    hanoi(3 , 'A' , 'C' , 'B');
+    string output = rmvDuplicates("aaaabccccdefeee" , 'a');
+    cout << output;
     return 0;
 }
