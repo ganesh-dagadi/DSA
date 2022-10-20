@@ -4,6 +4,7 @@
         "iostream": "cpp",
         "ios": "cpp",
         "type_traits": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "vector": "cpp"
     }
 }

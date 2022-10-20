@@ -108,6 +108,7 @@ string rmvDuplicates(string str , char key){
     string join = str[0] + rmvDuplicates(str.substr(1 , str.length()-1) , str[1]);
     return join;
 }
+
 int main(){
     string output = rmvDuplicates("aaaabccccdefeee" , 'a');
     cout << output;
