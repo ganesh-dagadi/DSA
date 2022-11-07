@@ -35,7 +35,7 @@ vector<int> mergeSort(vector<int> vect){
         }
     }
 
-    //Last element remaining
+    //elements remaining
 
     while(i < left.size()){
         vect[k] = left[i];
@@ -52,9 +52,32 @@ vector<int> mergeSort(vector<int> vect){
     return vect;
 }
 
+void quickSort(vector <int> &vect , int start , int end){
+    if((end - start) <= 0){
+        return;
+    }
+    int pivot = vect[end];
+    int j = start;
+    int i = start - 1;
+    while(j < end){
+        if(vect[j] < pivot){
+            i+= 1;
+            int temp = vect[i];
+            vect[i] = vect[j];
+            vect[j] = temp;
+        }
+        j++;
+    }
+
+    vect.insert(vect.begin() + i + 1 , pivot);
+    vect.erase(vect.begin() + end+1);
+    quickSort(vect , 0 , i);
+    quickSort(vect , i+2 , end);
+}
 int main(){
-    vector<int> vect = {9 , 6 , 9 , 8 , 9 , 6,5 , 23 , 5, 7 , 89, 5, 4};
-    vect = mergeSort(vect);
+    vector<int> vect = {1 , 44 , 2 , 2 , 2 , 4 , 6 , 1 , 0 , 77 , 7 , 8 , 8 , 44 };
+    vector<int> output = {};
+    quickSort(vect,0 , vect.size() - 1);
     for(int i = 0 ; i < vect.size() ; i++){
         cout << vect[i] << " , ";
     }
