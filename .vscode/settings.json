@@ -5,6 +5,7 @@
         "ios": "cpp",
         "type_traits": "cpp",
         "xutility": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "ostream": "cpp"
     }
 }
