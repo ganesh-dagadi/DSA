@@ -1,8 +1,7 @@
 #include <iostream>
 using namespace std;
-int main(){
 
-    class node {
+class node {
         public:
         int data;
         node *link;
@@ -66,20 +65,81 @@ int main(){
             curr->link = prev;
             head->link = curr;
         }
+
+        node* reverseKNodes(node* &head , int k){
+            node* prev = NULL;
+            node* curr = head;
+            node* next;
+
+            int count = 0;
+            while(curr != NULL && count < k){
+                next = curr->link;
+                curr->link = prev;
+                prev = curr;
+                curr = next;
+                count++;
+            }
+            if(next != NULL){
+                head-> link = reverseKNodes(next , k);
+            }
+            return prev;
+        }
     };
 
-    node* linkedList = new node(5);
-    linkedList->insertAtEnd(10);
-    linkedList->insertAtEnd(20);
-    linkedList->insertAtEnd(20);
-    linkedList->insertAtEnd(30);
-    linkedList->insertBeginning(linkedList , 40);
+bool isCycle(node* head){
+    node* slow = head;
+    node* fast = head;
+    while(fast->link != NULL && fast->link->link != NULL){
+        slow = slow->link;
+        fast = fast->link->link;
+        if(fast == slow){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void removeCycle(node* head){
+    node* slow = head;
+    node* fast = head;
+    do{
+        slow = slow->link;
+        fast = fast->link->link;
+    }while(fast != slow);
+    fast = head;
+    while(slow->link != fast->link){
+        fast = fast->link;
+        slow = slow->link;
+    }
+    slow->link = NULL;
+}
+
+void makeCycle(node* head , int pos){
+    int count = 0;
+    node* temp = head;
+    node* cycleStart;
+    while(temp->link !=NULL){
+        if(count == pos){
+            cycleStart = temp;
+        }
+        temp = temp->link;
+        count++;
+    }
+    temp->link = cycleStart;
+    cout << cycleStart << endl;
+}
+int main(){
+
+    node* linkedList = new node(1);
+    linkedList->insertAtEnd(2);
+    linkedList->insertAtEnd(3);
+    linkedList->insertAtEnd(4);
+    linkedList->insertAtEnd(5);
+    linkedList->insertAtEnd(6);
     linkedList->printElements();
-    // linkedList->deleteHead(linkedList);
-    // cout << "After delete" << endl;
-    // linkedList->printElements();
-    linkedList->reverseIter(linkedList);
-    cout << "After reverse \n" << endl;
-    linkedList->printElements();
+    makeCycle(linkedList , 3);
+    cout << isCycle(linkedList) << endl;
+    removeCycle(linkedList);
+    cout << isCycle(linkedList);
     return 0;
 }
