@@ -84,6 +84,16 @@ class node {
             }
             return prev;
         }
+
+        int length(){
+            node* head = this;
+            int l = 0;
+            while(head->link != NULL){
+                l++;
+                head = head->link;
+            }
+            return l;
+        }
     };
 
 bool isCycle(node* head){
@@ -128,18 +138,37 @@ void makeCycle(node* head , int pos){
     temp->link = cycleStart;
     cout << cycleStart << endl;
 }
+
+
+void appendLastKnodes(node* &head , int k){
+    int l = head->length();
+    node* temp = head;
+    node* newTail; node* newHead;
+    int count = 0;
+    while(count < l){
+        if(count == (l-k)){
+            newTail = temp;
+            newHead = temp->link;
+        }
+        temp = temp->link;
+        count++;
+    }
+    temp->link = head;
+    newTail->link = NULL;
+    head = newHead;
+}
 int main(){
 
-    node* linkedList = new node(1);
-    linkedList->insertAtEnd(2);
-    linkedList->insertAtEnd(3);
-    linkedList->insertAtEnd(4);
-    linkedList->insertAtEnd(5);
-    linkedList->insertAtEnd(6);
-    linkedList->printElements();
-    makeCycle(linkedList , 3);
-    cout << isCycle(linkedList) << endl;
-    removeCycle(linkedList);
-    cout << isCycle(linkedList);
+    node* linkedL = new node(0);
+    linkedL->insertAtEnd(1);
+    linkedL->insertAtEnd(2);
+    linkedL->insertAtEnd(3);
+    linkedL->insertAtEnd(4);
+    linkedL->insertAtEnd(5);
+    linkedL->insertAtEnd(6);
+    linkedL->insertAtEnd(7);
+    linkedL->printElements();
+    appendLastKnodes(linkedL , 3);
+    linkedL->printElements();
     return 0;
 }
