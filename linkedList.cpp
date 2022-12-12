@@ -157,6 +157,38 @@ void appendLastKnodes(node* &head , int k){
     newTail->link = NULL;
     head = newHead;
 }
+
+int intersectionDetect(node * &head1 , node* &head2){
+    int l1 = head1->length();
+    int l2 = head2->length();
+    int d = 0;
+    node* ptr1 ; node* ptr2;
+    if(l1 > l2){
+        d = l1-l2;
+        ptr1 = head1;
+        ptr2 = head2;
+    }else{
+        d = l2-l1;
+        ptr1 = head2;
+        ptr2 = head1;
+    }
+
+    while(d){
+        ptr1 = ptr1->link;
+        d--;
+    }
+
+    while(ptr1->link != NULL && ptr2->link != NULL){
+        if(ptr1 == ptr2){
+            return ptr1->data;
+        }
+
+        ptr1 = ptr1->link;
+        ptr2 = ptr2->link;
+    }
+
+    return -1;
+}
 int main(){
 
     node* linkedL = new node(0);
