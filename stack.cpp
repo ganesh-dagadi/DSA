@@ -107,6 +107,26 @@ void reverseSentence(string str){
         st.pop();
     }
 }
+
+void insertAtBottom(stack &st , int ele){
+    if(st.empty()){
+        st.push(ele);
+        return;
+    }
+    int topEle = st.top_ele();
+    st.pop();
+    insertAtBottom(st , ele);
+    st.push(topEle);
+}
+void reverse(stack &st){
+    if(st.empty()){
+        return;
+    }
+    int topEle = st.top_ele();
+    st.pop();
+    reverse(st);
+    insertAtBottom(st , topEle);
+}
 int main(){
     stack st;
     st.push(3);
@@ -114,10 +134,11 @@ int main(){
     st.push(1);
     st.push(8);
     // st.printStack();
+    cout << endl;
     //cout << st.top_ele() << endl;
-    st.pop();
+    // reverse(st);
     //cout << st.top_ele() << endl;
-
+    // st.printStack();
     string str = "Hello what is your name?";
     reverseSentence(str);
     return 0;
