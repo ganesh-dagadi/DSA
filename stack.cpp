@@ -127,19 +127,79 @@ void reverse(stack &st){
     reverse(st);
     insertAtBottom(st , topEle);
 }
-int main(){
+
+int evalPrefix(string str){
     stack st;
-    st.push(3);
-    st.push(5);
-    st.push(1);
-    st.push(8);
-    // st.printStack();
-    cout << endl;
-    //cout << st.top_ele() << endl;
-    // reverse(st);
-    //cout << st.top_ele() << endl;
-    // st.printStack();
-    string str = "Hello what is your name?";
-    reverseSentence(str);
+    for(int i = str.length() - 1 ; i >= 0 ; i--){
+        if(str[i] >= '0' && str[i] <= '9'){
+            st.push(str[i] - '0');
+        }else{
+            int op1 = st.top_ele();
+            st.pop();
+            int op2 = st.top_ele();
+            st.pop();
+            switch (str[i])
+            {
+            case '+':
+                st.push(op1 + op2);
+                break;
+            case '-':
+                st.push(op1 - op2);
+                break;
+            case '*':
+                st.push(op1 * op2);
+                break;
+            case '/':
+                st.push(op1 / op2);
+                break;
+            case '^':
+                st.push(op1 ^ op2);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+     return st.top_ele();
+}
+
+
+int evalPostfix(string str){
+    stack st;
+    for(int i = 0 ; i < str.length() ; i++){
+        if(str[i] >= '0' && str[i] <= '9'){
+            st.push(str[i] - '0');
+        }else{
+            int op1 = st.top_ele();
+            st.pop();
+            int op2 = st.top_ele();
+            st.pop();
+
+            switch (str[i])
+            {
+            case '+':
+                st.push(op2 + op1);
+                break;
+            case '-':
+                st.push(op2 - op1);
+                break;
+            case '*':
+                st.push(op2 * op1);
+                break;
+            case '/':
+                st.push(op2 / op1);
+                break;
+            case '^':
+                st.push(op2 ^ op1);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    return st.top_ele();
+}
+int main(){
+    cout << evalPostfix("46+2/5*7+") << endl;
     return 0;
 }
