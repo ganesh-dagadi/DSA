@@ -199,7 +199,91 @@ int evalPostfix(string str){
     }
     return st.top_ele();
 }
+
+class charStack{
+    char arr[n];
+    int top;
+
+    public : 
+    charStack(){
+        top = -1;
+    }
+
+    void push(char ch){
+        if(top == (n-1)){
+            cout << "Stack overflow" << endl;
+            return;
+        }
+        top++;
+        arr[top] = ch;
+    }
+
+    void pop(){
+        if(top == -1){
+            cout << "No element to pop" << endl;
+            return;
+        }
+        top--;
+    }
+
+    char top_ele(){
+        if(top == -1){
+            cout << "Stack is empty" << endl;
+            return ' ';
+        }
+        return arr[top];
+    }
+
+    bool empty(){
+        return top == -1;
+    }
+};
+int preced(char c){
+    if(c == '^'){
+        return 3;
+    }
+    if(c == '*' || c== '/'){
+        return 2;
+    }
+    if(c == '+' || c == '-'){
+        return 1;
+    }
+    return -1;
+}
+string infixToPostfix(string str){
+    charStack st;
+    string res;
+
+    for(int i =0 ; i < str.length() ; i++){
+        if((str[i] >= 'a' && str[i] <= 'z') ||(str[i] >= 'A' && str[i] <= 'Z')){
+            res += str[i];
+        }else if(str[i] == '('){
+            st.push(str[i]);
+        }else if(str[i] == ')'){
+            while(!st.empty() && st.top_ele() != '('){
+                res += st.top_ele();
+                st.pop();
+            }
+            if(!st.empty()){
+                st.pop();
+            }
+        }else{
+            while(!st.empty() && (preced(str[i]) < preced(st.top_ele()))){
+                res += st.top_ele();
+                st.pop();
+            }
+            st.push(str[i]);
+        }
+    }
+
+    while(!st.empty()){
+        res += st.top_ele();
+        st.pop();
+    }
+
+    return res;
+}
 int main(){
-    cout << evalPostfix("46+2/5*7+") << endl;
+    cout << infixToPostfix("(a-b/c)*(a/k-l)");
     return 0;
 }
