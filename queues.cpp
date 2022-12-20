@@ -109,8 +109,98 @@ class llqueue{
         return 0;
     }
 };
+
+//stack for queue
+class stack{
+    int* arr;
+    int top;
+
+    public : 
+    stack(){
+        arr = new int[N];
+        top = -1;
+    }
+
+    void push(int num){
+        if(top == (N-1)){
+            cout << "Stack overflow" << endl;
+            return;
+        }
+        top++;
+        arr[top] = num;
+    }
+
+    void pop(){
+        if(top == -1){
+            cout << "No element to pop" << endl;
+            return;
+        }
+        top--;
+    }
+
+    int top_ele(){
+        if(top == -1){
+            cout << "Stack is empty" << endl;
+            return -1;
+        }
+        return arr[top];
+    }
+
+    bool empty(){
+        return top == -1;
+    }
+
+    void printStack(){
+        int i = 0;
+        while(i <= top){
+            cout << arr[i] << endl;
+            i++;
+        }
+    }
+};
+
+class stackQueue{
+    stack s1 ; 
+    stack s2;
+
+    public:
+        void push(int val){
+            s1.push(val);
+        }
+
+        void pop(){
+            if(s1.empty() && s2.empty()){
+                cout << "Queue is empty" << endl;
+                return;
+            }
+
+            if(s2.empty()){
+                while(!s1.empty()){
+                    s2.push(s1.top_ele());
+                    s1.pop();
+                }
+            }
+            s2.pop();            
+        }
+
+        int peek(){
+            if(s1.empty() && s2.empty()){
+                cout << "Queue is empty" << endl;
+                return -1;
+            }
+
+            if(s2.empty()){
+                while(!s1.empty()){
+                    s2.push(s1.top_ele());
+                    s1.pop();
+                }
+            }
+
+            return s2.top_ele();
+        }
+};
 int main(){
-    llqueue q;
+    stackQueue q;
     q.push(10);
     q.push(20);
     q.push(30);
@@ -120,6 +210,6 @@ int main(){
     q.pop();
     cout << q.peek() << endl;
     q.pop();
-    cout << q.isEmpty();
+    // cout << q.isEmpty();
     return 0;
 }
