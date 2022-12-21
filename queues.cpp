@@ -45,7 +45,6 @@ class queue{
 
     bool empty(){
         if(front == -1 || (front > back)){
-            cout << "Is empty" << endl;
             return 1;
         }
 
@@ -102,7 +101,7 @@ class llqueue{
         return front->data;
     }
 
-    bool isEmpty(){
+    bool empty(){
         if(front == NULL){
             return 1;
         }
@@ -199,17 +198,109 @@ class stackQueue{
             return s2.top_ele();
         }
 };
+
+class stackWithQueuePushExpensive{
+    llqueue q1;
+    llqueue q2;
+
+    public:
+    void push(int val){
+        q2.push(val);
+        while(!q1.empty()){
+            q2.push(q1.peek());
+            q1.pop();
+        }
+        while(!q2.empty()){
+            q1.push(q2.peek());
+            q2.pop();
+        }
+    }
+
+    void pop(){
+        if(q1.empty()){
+            cout << "Stack is empty" << endl;
+            return;
+        }
+         q1.pop();
+    }
+
+    int top(){
+        if(q1.empty()){
+            cout << "Stack is empty" << endl;
+            return -1;
+        }
+        return q1.peek();
+    }
+};
+
+class stackWithQueuePop{
+    llqueue q1;
+    llqueue q2;
+    int n;
+    public:
+    stackWithQueuePop(){
+        n = 0;
+    }
+    void push(int val){
+        q1.push(val);
+        n++;
+    }
+
+    void pop(){
+        if(q1.empty()){
+            cout << "Stack empty" << endl;
+            return;
+        }
+        while(n != 1){
+            q2.push(q1.peek());
+            q1.pop();
+            n--;
+        }
+        q1.pop();
+        n--;
+        while(!q2.empty()){
+            q1.push(q2.peek());
+            q2.pop();
+            n++;
+        }
+    }
+
+    int top(){
+        if(q1.empty()){
+            cout << "Stack empty" << endl;
+            return -1;
+        }
+        while(n != 1){
+            q2.push(q1.peek());
+            q1.pop();
+            n--;
+        }
+        int toReturn = q1.peek();
+        q2.push(q1.peek());
+        q1.pop();
+        n--;
+        while(!q2.empty()){
+            q1.push(q2.peek());
+            q2.pop();
+            n++;
+        }
+
+        return toReturn;
+    }
+};
 int main(){
-    stackQueue q;
+    stackWithQueuePop q;
     q.push(10);
     q.push(20);
     q.push(30);
-    cout << q.peek() << endl;
+    q.push(10);
+    q.push(20);
+    q.push(30);
     q.pop();
-    cout << q.peek() << endl;
     q.pop();
-    cout << q.peek() << endl;
     q.pop();
+    q.pop();
+    cout << q.top();
     // cout << q.isEmpty();
     return 0;
 }
